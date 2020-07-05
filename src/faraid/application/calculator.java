@@ -175,13 +175,26 @@ public class calculator extends javax.swing.JFrame {
     }
 
     public void setAyah(double hartawarisanbersih) {
-         if(getJumlahanaklaki()==0&&getJumlahanakperempuan()==0){
+         if(getJumlahanaklaki()!=0&&getJumlahanakperempuan()==0){
+            setBagianayah("1/6");
+            this.ayah=hartawarisanbersih/6;
+            double sisax=getSisa();
+            sisax-=getAyah();
+            setSisa( sisax);
+        } else if(getJumlahanaklaki()!=0&&getJumlahanakperempuan()!=0){
+            setBagianayah("1/6");
+            this.ayah=hartawarisanbersih/6;
+            double sisax=getSisa();
+            sisax-=getAyah();
+            setSisa( sisax);
+        } else if(getJumlahanaklaki()==0&&getJumlahanakperempuan()==0){
             setBagianayah("Asabah");
             this.ayah=getSisa();
             double sisax=getSisa();
             sisax-=getAyah();
             setSisa( sisax);
-        }else if(getJumlahanaklaki()!=0||getJumlahanakperempuan()!=0){
+        
+         } else if(getJumlahanaklaki()==0&&getJumlahanakperempuan()!=0){
             setBagianayah("1/6");
             this.ayah=hartawarisanbersih/6;
             double sisax=getSisa();
@@ -233,7 +246,7 @@ public class calculator extends javax.swing.JFrame {
             double sisabagian=getSisa()/((2*getJumlahanaklaki())+getJumlahanakperempuan());
             this.anaklaki=2*sisabagian;
             double sisax=getSisa();
-            setSisa( sisax);
+            setSisa(sisax);
         }
         
     }
@@ -249,6 +262,7 @@ public class calculator extends javax.swing.JFrame {
            double sisax=getSisa();
            sisax-=getAnakperempuan();
            setSisa( sisax);
+           
        }else if(getJumlahanaklaki()==0&&getJumlahanakperempuan()>1){
            setBagiananakperempuan("2/3");
            this.anakperempuan=((getWarisanbersih()*2)/3)/getJumlahanakperempuan();
@@ -256,6 +270,9 @@ public class calculator extends javax.swing.JFrame {
            double x=getAnakperempuan()*jumlahanakperempuan;
            sisax-=x;
            setSisa( sisax);
+           setAyah(getSisa());
+           setBagianayah("Asabah");
+          
        }else if(getJumlahanaklaki()>=1&&getJumlahanakperempuan()>=1){
            setBagiananakperempuan("Asabah");
            double sisabagian=getSisa()/((2*getJumlahanaklaki())+getJumlahanakperempuan());
@@ -370,6 +387,7 @@ public class calculator extends javax.swing.JFrame {
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         txsisa = new javax.swing.JTextField();
+        Kembali = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -645,6 +663,17 @@ public class calculator extends javax.swing.JFrame {
         });
         jPanel1.add(txsisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 650, 200, 30));
 
+        Kembali.setBackground(new java.awt.Color(0, 51, 204));
+        Kembali.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        Kembali.setForeground(new java.awt.Color(255, 255, 255));
+        Kembali.setText("Kembali");
+        Kembali.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                KembaliActionPerformed(evt);
+            }
+        });
+        jPanel1.add(Kembali, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 650, 100, 30));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -784,9 +813,7 @@ public class calculator extends javax.swing.JFrame {
            for (int i = 0; i < getJumlahanaklaki(); i++) {
             datax.addRow(anaklakiobj);   
            }
-           
-          
-       }
+          }
       
        if(txperempuan.getText().equals("")){
           setJumlahanakperempuan(0);
@@ -798,11 +825,20 @@ public class calculator extends javax.swing.JFrame {
                datax.addRow(anakperempuanobj);
            }
           
-           
+          }
        
-       }
-       
-       
+        double sisax=getSisa();
+           if(rdayah.isSelected()){
+               if(getJumlahanaklaki()==0&&getJumlahanakperempuan()!=0){
+           no++;
+           this.ayah=getSisa();
+           setBagianayah("Asabah");
+           Object [] ayahobj = {no, "Ayah",getBagianayah(),getAyah()};
+           datax.addRow(ayahobj);
+           sisax-=getAyah();
+           setSisa(sisax);
+           }
+           }
        }else{
            JOptionPane.showMessageDialog(null,"Silahkan isi data dengan lengkap");
        }
@@ -835,6 +871,7 @@ public class calculator extends javax.swing.JFrame {
         datax.setRowCount(0);
         txlakilaki.setText("");
         txperempuan.setText("");
+        txsisa.setText("");
         btnhitung2.setEnabled(true);
     }//GEN-LAST:event_btnreset2ActionPerformed
 
@@ -863,6 +900,12 @@ public class calculator extends javax.swing.JFrame {
     private void txsisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txsisaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txsisaActionPerformed
+
+    private void KembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KembaliActionPerformed
+        Main rx = new Main();
+         this.setVisible(false);
+        rx.setVisible(true);
+    }//GEN-LAST:event_KembaliActionPerformed
 
     /**
      * @param args the command line arguments
@@ -900,6 +943,7 @@ public class calculator extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Kembali;
     private javax.swing.JButton btnhitung1;
     private javax.swing.JButton btnhitung2;
     private javax.swing.JButton btnreset1;
